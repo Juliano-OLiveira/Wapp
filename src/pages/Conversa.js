@@ -8,7 +8,7 @@ import {
   StyleSheet,
   FlatList,
   TouchableOpacity,
-  Image
+  KeyboardAvoidingView
 } from "react-native";
 import api from "../services/api";
 import padores from "../style/default";
@@ -35,6 +35,7 @@ export default class Conversa extends Component {
           }
         >
           <Text>{item.mensagem}</Text>
+          <Text style={styles.horario_mensagem}>{item.horario_mensagem}</Text>
         </View>
       </View>
     );
@@ -48,18 +49,22 @@ export default class Conversa extends Component {
           style={{ height: "100%", width: "100%" }}
         >
           <HeaderConversa {...this.props} />
-          <FlatList
-            data={api.exemplo_de_conversa_pessoal}
-            renderItem={this.renderItem}
-            keyExtractor={(item, index) => `list-item-${index}`}
-            style={{ marginBottom: 10 }}
-            showsHorizontalScrollIndicator={false}
-          />
+
+          <View style={{ height: 410 }}>
+            <FlatList
+              data={api.exemplo_de_conversa_pessoal}
+              renderItem={this.renderItem}
+              keyExtractor={(item, index) => `list-item-${index}`}
+              style={{ marginBottom: 10 }}
+              showsHorizontalScrollIndicator={false}
+            />
+          </View>
           <View style={styles.inserir_texto_container}>
             <TextInput
               placeholder="Insira o texto aqui..."
               style={styles.inserir_texto}
             />
+
             <TouchableOpacity style={styles.bt_enviar}>
               <Ionicons
                 name="md-send"
@@ -103,7 +108,44 @@ const styles = StyleSheet.create({
     height: 45,
     borderRadius: 30,
     justifyContent: "center",
+    marginLeft: 5
+  },
+  mensagem_container: {
+    flex: 1,
+    flexDirection: "row",
+    marginVertical: 5,
+    marginHorizontal: 10,
+    justifyContent: "flex-end"
+  },
+  mensagem_container_remetente: {
+    flex: 1,
+    flexDirection: "row",
+    marginVertical: 5,
+    marginHorizontal: 10,
+    justifyContent: "flex-start"
+  },
+  horario_mensagem: {
+    fontSize: 14,
+    color: "grey",
+    marginTop: 5,
     marginLeft: 5,
-    alignSelf: "center"
+    fontWeight: "bold",
+    color: padores.cores.verde_claro
+  },
+  mensagem: {
+    backgroundColor: padores.cores.roxoclaro,
+    justifyContent: "space-evenly",
+    flexDirection: "row",
+    padding: 8,
+    borderTopRightRadius: 0,
+    borderRadius: 5
+  },
+  mensagem_remetente: {
+    backgroundColor: "white",
+    justifyContent: "space-evenly",
+    flexDirection: "row",
+    padding: 8,
+    borderTopLeftRadius: 0,
+    borderRadius: 5
   }
 });
